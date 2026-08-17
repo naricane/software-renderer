@@ -5,6 +5,8 @@
 constexpr int WIDTH = 800;
 constexpr int HEIGHT = 600;
 
+constexpr uint32_t LINE_COLOR = 0xF25E13FF;
+
 int main() {
   if (!SDL_Init(SDL_INIT_VIDEO)) {
     SDL_Log("SDL_Init failed: %s", SDL_GetError());
