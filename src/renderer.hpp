@@ -5,12 +5,11 @@
 #include <vector>
 
 struct Renderer {
-  SDL_Renderer *sdl_renderer;
-  SDL_Texture *framebuffer;
-  std::vector<uint32_t> pixels;
+  SDL_Surface *fb_surface;
+  std::vector<uint32_t> fb_pixels;
 
   Renderer(SDL_Window *window);
   void put_pixel(Vec2i position, uint32_t color);
   void clear();
-  void display();
+  void display(SDL_Window *window);
 };

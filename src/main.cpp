@@ -100,7 +100,7 @@ int main() {
     plot_line(renderer, Vec2i{200, 100}, Vec2i{60, 200});
     plot_line(renderer, Vec2i{60, 200}, Vec2i{100, 90});
 
-    renderer.display();
+    renderer.display(window);
   }
 
   return 0;
