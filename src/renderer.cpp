@@ -4,14 +4,12 @@
 #include <SDL3/SDL_surface.h>
 #include <SDL3/SDL_video.h>
 
-Renderer::Renderer() : fb_pixels(WIDTH * HEIGHT, 0x0) {}
-
 void Renderer::put_pixel(Vec2i position, uint32_t color) {
   if (position.x < 0 || position.x >= WIDTH || position.y < 0 ||
       position.y >= HEIGHT) {
     return;
   }
-  fb_pixels[position.x + position.y * WIDTH] = color;
+  framebuffer.get_pixels()[position.x + position.y * WIDTH] = color;
 }
 
 void Renderer::clear() {
@@ -28,9 +26,9 @@ void Renderer::display(SDL_Window *window) {
   }
 
   SDL_LockSurface(fb_surface);
-  SDL_ConvertPixels(WIDTH, HEIGHT, SDL_PIXELFORMAT_RGBA8888, fb_pixels.data(),
-                    WIDTH * sizeof(uint32_t), fb_surface->format,
-                    fb_surface->pixels, fb_surface->pitch);
+  SDL_ConvertPixels(WIDTH, HEIGHT, SDL_PIXELFORMAT_RGBA8888,
+                    framebuffer.get_pixels(), WIDTH * sizeof(uint32_t),
+                    fb_surface->format, fb_surface->pixels, fb_surface->pitch);
   SDL_UnlockSurface(fb_surface);
 
   SDL_UpdateWindowSurface(window);
