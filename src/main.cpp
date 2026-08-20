@@ -79,8 +79,7 @@ int main() {
     return 1;
   }
 
-  Renderer renderer(window);
-
+  Renderer renderer;
   bool running = true;
   SDL_Event event;
 
