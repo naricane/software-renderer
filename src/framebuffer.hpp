@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <span>
 #include <vector>
 
 class Framebuffer
@@ -10,5 +11,5 @@ private:
 
 public:
 	Framebuffer();
-	uint32_t* get_pixels();
+	std::span<uint32_t> get_pixels();
 };

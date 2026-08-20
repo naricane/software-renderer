@@ -6,8 +6,8 @@ Framebuffer::Framebuffer()
 {
 }
 
-uint32_t*
+std::span<uint32_t>
 Framebuffer::get_pixels()
 {
-	return pixels.data();
+	return std::span{ pixels };
 }
