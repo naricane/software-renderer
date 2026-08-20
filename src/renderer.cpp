@@ -35,7 +35,7 @@ Renderer::display(SDL_Window* window)
 		WIDTH,
 		HEIGHT,
 		SDL_PIXELFORMAT_RGBA8888,
-		framebuffer.get_pixels(),
+		framebuffer.get_pixels().data(),
 		WIDTH * sizeof(uint32_t),
 		fb_surface->format,
 		fb_surface->pixels,

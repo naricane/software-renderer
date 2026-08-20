@@ -1,6 +1,7 @@
 #include "constants.hpp"
 #include "rasterize.hpp"
 #include "renderer.hpp"
+#include "sdl_deleters.hpp"
 #include <SDL3/SDL.h>
 
 int
@@ -11,7 +12,7 @@ main()
 		return 1;
 	}
 
-	SDL_Window* window = SDL_CreateWindow("Software Renderer", WIDTH, HEIGHT, 0);
+	sdl::window window(SDL_CreateWindow("Software Renderer", WIDTH, HEIGHT, 0));
 	if (!window) {
 		SDL_Log("CreateWindow failed: %s", SDL_GetError());
 		return 1;
@@ -37,7 +38,7 @@ main()
 		rasterize::plot_line(renderer, Vec2i{ 200, 100 }, Vec2i{ 60, 200 });
 		rasterize::plot_line(renderer, Vec2i{ 60, 200 }, Vec2i{ 100, 90 });
 
-		renderer.display(window);
+		renderer.display(window.get());
 	}
 
 	return 0;
