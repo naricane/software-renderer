@@ -35,9 +35,11 @@ main()
 			rasterize::put_pixel(fb, Vec2i{ i % WIDTH, i / WIDTH }, 0x4287F5FF);
 		}
 
-		rasterize::plot_line(fb, Vec2i{ 100, 90 }, Vec2i{ 200, 100 });
-		rasterize::plot_line(fb, Vec2i{ 200, 100 }, Vec2i{ 60, 200 });
-		rasterize::plot_line(fb, Vec2i{ 60, 200 }, Vec2i{ 100, 90 });
+		// rasterize::plot_line(fb, Vec2i{ 100, 90 }, Vec2i{ 200, 100 });
+		// rasterize::plot_line(fb, Vec2i{ 200, 100 }, Vec2i{ 60, 200 });
+		// rasterize::plot_line(fb, Vec2i{ 60, 200 }, Vec2i{ 100, 90 });
+
+		rasterize::fill_triangle(fb, Vec2i{ 100, 90 }, Vec2i{ 200, 100 }, Vec2i{ 60, 200 });
 
 		renderer.display(window.get(), fb);
 	}

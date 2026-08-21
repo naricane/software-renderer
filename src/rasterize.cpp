@@ -83,4 +83,28 @@ plot_line(Framebuffer& fb, Vec2i from, Vec2i to)
 	}
 }
 
+int
+edge_function(Vec2i a, Vec2i b, Vec2i c)
+{
+	return 0.5 * ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
+}
+
+/* cool tutorial: https://jtsorlinis.github.io/rendering-tutorial/ */
+void
+fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
+{
+	for (int y = 0; y < HEIGHT; ++y) {
+		for (int x = 0; x < WIDTH; ++x) {
+			Vec2i p{ x, y };
+			int ABP = edge_function(a, b, p);
+			int BCP = edge_function(b, c, p);
+			int CAP = edge_function(c, a, p);
+
+			if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
+				put_pixel(fb, Vec2i{ p.x, p.y }, LINE_COLOR);
+			}
+		}
+	}
+}
+
 }
