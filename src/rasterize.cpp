@@ -93,8 +93,13 @@ edge_function(Vec2i a, Vec2i b, Vec2i c)
 void
 fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
 {
-	for (int y = 0; y < HEIGHT; ++y) {
-		for (int x = 0; x < WIDTH; ++x) {
+	int min_x = std::min(std::min(a.x, b.x), c.x);
+	int min_y = std::min(std::min(a.y, b.y), c.y);
+	int max_x = std::max(std::max(a.x, b.x), c.x);
+	int max_y = std::max(std::max(a.x, b.x), c.x);
+
+	for (int y = min_y; y < max_y; ++y) {
+		for (int x = min_x; x < max_x; ++x) {
 			Vec2i p{ x, y };
 			int ABP = edge_function(a, b, p);
 			int BCP = edge_function(b, c, p);
