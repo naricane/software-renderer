@@ -19,6 +19,7 @@ main()
 	}
 
 	Renderer renderer;
+	Framebuffer fb;
 	bool running = true;
 	SDL_Event event;
 
@@ -29,16 +30,16 @@ main()
 			}
 		}
 
-		renderer.clear();
+		fb.clear();
 		for (int i = 0; i < WIDTH * HEIGHT; ++i) {
-			renderer.put_pixel(Vec2i{ i % WIDTH, i / WIDTH }, 0x4287F5FF);
+			rasterize::put_pixel(fb, Vec2i{ i % WIDTH, i / WIDTH }, 0x4287F5FF);
 		}
 
-		rasterize::plot_line(renderer, Vec2i{ 100, 90 }, Vec2i{ 200, 100 });
-		rasterize::plot_line(renderer, Vec2i{ 200, 100 }, Vec2i{ 60, 200 });
-		rasterize::plot_line(renderer, Vec2i{ 60, 200 }, Vec2i{ 100, 90 });
+		rasterize::plot_line(fb, Vec2i{ 100, 90 }, Vec2i{ 200, 100 });
+		rasterize::plot_line(fb, Vec2i{ 200, 100 }, Vec2i{ 60, 200 });
+		rasterize::plot_line(fb, Vec2i{ 60, 200 }, Vec2i{ 100, 90 });
 
-		renderer.display(window.get());
+		renderer.display(window.get(), fb);
 	}
 
 	return 0;

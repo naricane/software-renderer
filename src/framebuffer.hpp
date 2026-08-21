@@ -11,5 +11,7 @@ private:
 
 public:
 	Framebuffer();
+
+	void clear();
 	std::span<uint32_t> get_pixels();
 };

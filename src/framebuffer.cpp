@@ -6,6 +6,12 @@ Framebuffer::Framebuffer()
 {
 }
 
+void
+Framebuffer::clear()
+{
+	std::fill(pixels.begin(), pixels.end(), 0x0);
+}
+
 std::span<uint32_t>
 Framebuffer::get_pixels()
 {
