@@ -106,6 +106,7 @@ fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
 
 	uint32_t color = 0x0;
 
+#pragma omp parallel for
 	for (int y = std::max(min_y, 0); y < std::min(max_y, HEIGHT); ++y) {
 		for (int x = std::max(min_x, 0); x < std::min(max_x, WIDTH); ++x) {
 			Vec2i p{ x, y };
