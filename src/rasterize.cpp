@@ -95,7 +95,7 @@ fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
 {
 	int ABC = edge_function(a, b, c);
 
-	if (ABC < 0) {
+	if (ABC > 0) {
 		return;
 	}
 
