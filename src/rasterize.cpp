@@ -86,7 +86,7 @@ plot_line(Framebuffer& fb, Vec2i from, Vec2i to)
 int
 edge_function(Vec2i a, Vec2i b, Vec2i c)
 {
-	return 0.5 * ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
+	return .5f * ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
 }
 
 /* cool tutorial: https://jtsorlinis.github.io/rendering-tutorial/ */
@@ -96,7 +96,9 @@ fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
 	int min_x = std::min(std::min(a.x, b.x), c.x);
 	int min_y = std::min(std::min(a.y, b.y), c.y);
 	int max_x = std::max(std::max(a.x, b.x), c.x);
-	int max_y = std::max(std::max(a.x, b.x), c.x);
+	int max_y = std::max(std::max(a.y, b.y), c.y);
+
+	uint32_t color = 0x0;
 
 	for (int y = min_y; y < max_y; ++y) {
 		for (int x = min_x; x < max_x; ++x) {
@@ -106,7 +108,7 @@ fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
 			int CAP = edge_function(c, a, p);
 
 			if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
-				put_pixel(fb, Vec2i{ p.x, p.y }, LINE_COLOR);
+				put_pixel(fb, Vec2i{ p.x, p.y }, color);
 			}
 		}
 	}
