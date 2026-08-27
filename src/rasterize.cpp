@@ -91,11 +91,11 @@ edge_function(Vec2i a, Vec2i b, Vec2i c)
 
 /* cool tutorial: https://jtsorlinis.github.io/rendering-tutorial/ */
 void
-fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
+fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c, uint32_t color)
 {
 	int ABC = edge_function(a, b, c);
 
-	if (ABC > 0) {
+	if (ABC >= 0) {
 		return;
 	}
 
@@ -103,8 +103,6 @@ fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c)
 	int min_y = std::min(std::min(a.y, b.y), c.y);
 	int max_x = std::max(std::max(a.x, b.x), c.x);
 	int max_y = std::max(std::max(a.y, b.y), c.y);
-
-	uint32_t color = 0x0;
 
 #pragma omp parallel for
 	for (int y = std::max(min_y, 0); y < std::min(max_y, HEIGHT); ++y) {

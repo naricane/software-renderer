@@ -12,6 +12,6 @@ void
 plot_line(Framebuffer& fb, Vec2i from, Vec2i to);
 
 void
-fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c);
+fill_triangle(Framebuffer& fb, Vec2i a, Vec2i b, Vec2i c, uint32_t color);
 
 }
