@@ -1,10 +1,14 @@
 #pragma once
 
 #include "framebuffer.hpp"
+#include "vertex.hpp"
 #include <SDL3/SDL_render.h>
 
 class Renderer
 {
+private:
+	Framebuffer fb;
+
 public:
 	Renderer() {}
 	Renderer(const Renderer&) = delete;
@@ -12,5 +16,7 @@ public:
 	Renderer(Renderer&&) = default;
 	Renderer& operator=(Renderer&&) = default;
 
-	void display(SDL_Window* window, Framebuffer& fb);
+	void draw_elements(std::span<const Vertex> verts, std::span<const unsigned int> idx, Mat4 mvp);
+	void clear();
+	void display(SDL_Window* window);
 };
