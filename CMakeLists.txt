@@ -13,6 +13,7 @@ add_executable(${PROJECT_NAME}
     src/renderer.cpp
     src/framebuffer.cpp
     src/rasterize.cpp
+    src/math.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3 OpenMP::OpenMP_CXX )
