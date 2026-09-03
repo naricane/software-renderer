@@ -1,4 +1,5 @@
 #pragma once
+#include "color.hpp"
 #include "math.hpp"
 
 struct Vertex
