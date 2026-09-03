@@ -8,5 +8,5 @@ struct Color
 	uint8_t b = 0x0;
 	uint8_t a = 0xFF;
 
-	uint32_t packed() { return a << 24 | b << 16 | g << 8 | r; }
+	uint32_t as_rgba() { return (r << 24) | (g << 16) | (b << 8) | a; }
 };
