@@ -38,7 +38,7 @@ Renderer::draw_elements(std::span<const Vertex> verts, std::span<const unsigned 
 		Vec2i b = to_screen(c1, Vec2i{ WIDTH, HEIGHT });
 		Vec2i c = to_screen(c2, Vec2i{ WIDTH, HEIGHT });
 		rasterize::fill_triangle(
-			fb, a, b, c, -c0.z / c0.w, -c1.z / c1.w, -c2.z / c2.w, p0.color, p1.color, p2.color
+			fb, zb, a, b, c, c0.z / c0.w, c1.z / c1.w, c2.z / c2.w, p0.color, p1.color, p2.color
 		);
 	}
 }
@@ -47,6 +47,7 @@ void
 Renderer::clear()
 {
 	fb.clear();
+	zb.clear(1.f);
 }
 
 void

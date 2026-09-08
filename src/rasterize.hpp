@@ -15,6 +15,7 @@ plot_line(FrameBuffer& fb, Vec2i from, Vec2i to);
 void
 fill_triangle(
 	FrameBuffer& fb,
+	ZBuffer& zb,
 	Vec2i a,
 	Vec2i b,
 	Vec2i c,

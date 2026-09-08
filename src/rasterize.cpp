@@ -1,7 +1,6 @@
 #include "rasterize.hpp"
 #include "constants.hpp"
 #include <algorithm>
-#include <cstdio>
 #include <cstdlib>
 
 namespace rasterize {
@@ -94,6 +93,7 @@ edge_function(Vec2i a, Vec2i b, Vec2i c)
 void
 fill_triangle(
 	FrameBuffer& fb,
+	ZBuffer& zb,
 	Vec2i a,
 	Vec2i b,
 	Vec2i c,
@@ -133,12 +133,16 @@ fill_triangle(
 
 				float depth = depth_a * weight_a + depth_b * weight_b + depth_c * weight_c;
 
-				int rr = color_a.r * weight_a + color_b.r * weight_b + color_c.r * weight_c;
-				int gg = color_a.g * weight_a + color_b.g * weight_b + color_c.g * weight_c;
-				int bb = color_a.b * weight_a + color_b.b * weight_b + color_c.b * weight_c;
+				float& zb_cell = zb.get_span()[x + y * WIDTH];
+				if (depth >= zb_cell) {
+					continue;
+				}
+				zb_cell = depth;
 
-				Color color
-					= Color{ uint8_t(depth * 255), uint8_t(depth * 255), uint8_t(depth * 255) };
+				uint8_t rr = color_a.r * weight_a + color_b.r * weight_b + color_c.r * weight_c;
+				uint8_t gg = color_a.g * weight_a + color_b.g * weight_b + color_c.g * weight_c;
+				uint8_t bb = color_a.b * weight_a + color_b.b * weight_b + color_c.b * weight_c;
+				Color color = Color{ rr, gg, bb };
 
 				put_pixel(fb, Vec2i{ p.x, p.y }, color);
 			}
