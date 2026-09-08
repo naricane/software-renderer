@@ -11,7 +11,6 @@ find_package(OpenMP REQUIRED)
 add_executable(${PROJECT_NAME}
     src/main.cpp
     src/renderer.cpp
-    src/framebuffer.cpp
     src/rasterize.cpp
     src/math.cpp
 )

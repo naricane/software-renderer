@@ -5,7 +5,7 @@
 #include <SDL3/SDL_surface.h>
 #include <SDL3/SDL_video.h>
 
-Vec2i
+static Vec2i
 to_screen(const Vec4& clip, Vec2i screen_size)
 {
 	float ndc_x = clip.x / clip.w;
@@ -17,15 +17,9 @@ to_screen(const Vec4& clip, Vec2i screen_size)
 	return Vec2i{ sx, sy };
 }
 
-// temporary test
-static uint32_t colors[] = {
-	0x5EFBD1FF, 0xC07A8CFF, 0xE34FF4FF, 0xBFB932FF, 0x28DBDAFF, 0xAE3852FF,
-};
-
 void
 Renderer::draw_elements(std::span<const Vertex> verts, std::span<const unsigned int> idx, Mat4 mvp)
 {
-
 	for (std::size_t i = 0; i + 2 < idx.size(); i += 3) {
 		Vertex p0 = verts[idx[i]];
 		Vertex p1 = verts[idx[i + 1]];
@@ -43,7 +37,9 @@ Renderer::draw_elements(std::span<const Vertex> verts, std::span<const unsigned 
 		Vec2i a = to_screen(c0, Vec2i{ WIDTH, HEIGHT });
 		Vec2i b = to_screen(c1, Vec2i{ WIDTH, HEIGHT });
 		Vec2i c = to_screen(c2, Vec2i{ WIDTH, HEIGHT });
-		rasterize::fill_triangle(fb, a, b, c, colors[(i / 6) % 6]);
+		rasterize::fill_triangle(
+			fb, a, b, c, -c0.z / c0.w, -c1.z / c1.w, -c2.z / c2.w, p0.color, p1.color, p2.color
+		);
 	}
 }
 
@@ -66,8 +62,8 @@ Renderer::display(SDL_Window* window)
 	SDL_ConvertPixels(
 		WIDTH,
 		HEIGHT,
-		SDL_PIXELFORMAT_RGBA8888,
-		fb.get_pixels().data(),
+		SDL_PIXELFORMAT_RGBA32,
+		fb.get_span().data(),
 		WIDTH * sizeof(uint32_t),
 		fb_surface->format,
 		fb_surface->pixels,

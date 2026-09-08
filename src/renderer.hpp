@@ -1,13 +1,14 @@
 #pragma once
 
-#include "framebuffer.hpp"
+#include "data_types.hpp"
 #include "vertex.hpp"
 #include <SDL3/SDL_render.h>
 
 class Renderer
 {
 private:
-	Framebuffer fb;
+	FrameBuffer fb;
+	ZBuffer zb;
 
 public:
 	Renderer() {}
