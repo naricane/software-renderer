@@ -1,5 +1,5 @@
 #include "renderer.hpp"
-#include "constants.hpp"
+#include "core/constants.hpp"
 #include "rasterize.hpp"
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_surface.h>

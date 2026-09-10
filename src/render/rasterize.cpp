@@ -1,5 +1,5 @@
 #include "rasterize.hpp"
-#include "constants.hpp"
+#include "core/constants.hpp"
 #include <algorithm>
 #include <cstdlib>
 

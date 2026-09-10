@@ -9,10 +9,14 @@ find_package(SDL3 REQUIRED CONFIG)
 find_package(OpenMP REQUIRED)
 
 add_executable(${PROJECT_NAME}
+    src/core/math.cpp
     src/main.cpp
-    src/renderer.cpp
-    src/rasterize.cpp
-    src/math.cpp
+    src/render/rasterize.cpp
+    src/render/renderer.cpp
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3 OpenMP::OpenMP_CXX )

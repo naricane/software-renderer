@@ -1,7 +1,7 @@
 #pragma once
 
-#include "data_types.hpp"
-#include "vertex.hpp"
+#include "core/data_types.hpp"
+#include "core/vertex.hpp"
 #include <SDL3/SDL_render.h>
 
 class Renderer

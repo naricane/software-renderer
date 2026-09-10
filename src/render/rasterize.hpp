@@ -1,8 +1,8 @@
 #pragma once
 
-#include "color.hpp"
-#include "data_types.hpp"
-#include "math.hpp"
+#include "core/color.hpp"
+#include "core/data_types.hpp"
+#include "core/math.hpp"
 
 namespace rasterize {
 
