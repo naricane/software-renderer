@@ -10,7 +10,7 @@ find_package(OpenMP REQUIRED)
 
 add_executable(${PROJECT_NAME}
     src/core/math.cpp
-    src/demo/obj_loader.cpp
+    src/demo/ply_loader.cpp
     src/main.cpp
     src/render/rasterize.cpp
     src/render/renderer.cpp
