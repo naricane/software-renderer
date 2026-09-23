@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/constants.hpp"
 #include "core/data_types.hpp"
 #include "core/vertex.hpp"
 #include "render/rasterize.hpp"
@@ -24,7 +25,11 @@ private:
 	ZBuffer zb;
 
 public:
-	Renderer() {}
+	Renderer()
+		: fb(WIDTH, HEIGHT)
+		, zb(WIDTH, HEIGHT)
+	{
+	}
 	Renderer(const Renderer&) = delete;
 	Renderer& operator=(const Renderer&) = delete;
 	Renderer(Renderer&&) = default;
