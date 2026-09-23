@@ -5,3 +5,4 @@
 
 using FrameBuffer = Buffer2D<Color>;
 using ZBuffer = Buffer2D<float>;
+using Texture = Buffer2D<Color>;
