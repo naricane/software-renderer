@@ -1,6 +1,5 @@
 #pragma once
 
-#include "constants.hpp"
 #include <span>
 #include <vector>
 
@@ -30,6 +29,6 @@ public:
 	void clear(T value = T{}) { std::fill(data.begin(), data.end(), value); }
 
 	std::span<T> get_span() { return std::span{ data }; }
-	T& at(size_t x, size_t y) { return data[y * buf_width + x]; }
-	const T& at(size_t x, size_t y) const { return data[y * buf_width + x]; }
+	T& get(size_t x, size_t y) { return data[y * buf_width + x]; }
+	const T& get(size_t x, size_t y) const { return data[y * buf_width + x]; }
 };
