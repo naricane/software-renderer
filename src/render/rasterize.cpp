@@ -6,7 +6,7 @@
 namespace rasterize {
 
 void
-put_pixel(FrameBuffer& fb, Vec2i position, Color color)
+put_pixel(ColorBuffer& fb, Vec2i position, Color color)
 {
 	if (position.x < 0 || position.x >= WIDTH || position.y < 0 || position.y >= HEIGHT) {
 		return;
@@ -16,7 +16,7 @@ put_pixel(FrameBuffer& fb, Vec2i position, Color color)
 
 /* cool explanation: https://www.youtube.com/watch?v=CceepU1vIKo */
 void
-plot_line_h(FrameBuffer& fb, Vec2i from, Vec2i to)
+plot_line_h(ColorBuffer& fb, Vec2i from, Vec2i to)
 {
 	if (from.x > to.x) {
 		std::swap(from.x, to.x);
@@ -45,7 +45,7 @@ plot_line_h(FrameBuffer& fb, Vec2i from, Vec2i to)
 }
 
 void
-plot_line_v(FrameBuffer& fb, Vec2i from, Vec2i to)
+plot_line_v(ColorBuffer& fb, Vec2i from, Vec2i to)
 {
 	if (from.y > to.y) {
 		std::swap(from.x, to.x);
@@ -74,7 +74,7 @@ plot_line_v(FrameBuffer& fb, Vec2i from, Vec2i to)
 }
 
 void
-plot_line(FrameBuffer& fb, Vec2i from, Vec2i to)
+plot_line(ColorBuffer& fb, Vec2i from, Vec2i to)
 {
 	if (std::abs(to.x - from.x) > std::abs(to.y - from.y)) {
 		plot_line_h(fb, from, to);

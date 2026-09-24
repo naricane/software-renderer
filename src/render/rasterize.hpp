@@ -7,10 +7,10 @@
 namespace rasterize {
 
 void
-put_pixel(FrameBuffer& fb, Vec2i position, Color color);
+put_pixel(ColorBuffer& fb, Vec2i position, Color color);
 
 void
-plot_line(FrameBuffer& fb, Vec2i from, Vec2i to);
+plot_line(ColorBuffer& fb, Vec2i from, Vec2i to);
 
 inline float
 edge_function(Vec2i a, Vec2i b, Vec2i c)
@@ -23,7 +23,7 @@ template<typename Shader>
 void
 fill_triangle(
 	const Shader& sh,
-	FrameBuffer& fb,
+	ColorBuffer& fb,
 	ZBuffer& zb,
 	Vec2i a,
 	Vec2i b,

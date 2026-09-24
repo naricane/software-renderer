@@ -21,7 +21,7 @@ to_screen(const Vec4& clip, Vec2i screen_size)
 class Renderer
 {
 private:
-	FrameBuffer fb;
+	ColorBuffer fb;
 	ZBuffer zb;
 
 public:

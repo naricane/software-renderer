@@ -3,6 +3,6 @@
 #include "buffer2d.hpp"
 #include "color.hpp"
 
-using FrameBuffer = Buffer2D<Color>;
+using ColorBuffer = Buffer2D<Color>;
 using ZBuffer = Buffer2D<float>;
 using Texture = Buffer2D<Color>;
