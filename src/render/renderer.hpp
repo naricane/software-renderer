@@ -20,13 +20,13 @@ to_screen(const Vec4& clip, Vec2i screen_size)
 
 class Renderer
 {
-private:
-	ColorBuffer fb;
+public:
+	ColorBuffer cb;
 	ZBuffer zb;
 
 public:
 	Renderer()
-		: fb(WIDTH, HEIGHT)
+		: cb(WIDTH, HEIGHT)
 		, zb(WIDTH, HEIGHT)
 	{
 	}
@@ -45,32 +45,38 @@ public:
 		using Out = typename Shader::Output;
 
 		for (std::size_t i = 0; i + 2 < indices.size(); i += 3) {
-			Out o0 = sh.vertex(vertices[indices[i]]);
-			Out o1 = sh.vertex(vertices[indices[i + 1]]);
-			Out o2 = sh.vertex(vertices[indices[i + 2]]);
+			Out out_a = sh.vertex(vertices[indices[i]]);
+			Out out_b = sh.vertex(vertices[indices[i + 1]]);
+			Out out_c = sh.vertex(vertices[indices[i + 2]]);
 
 			constexpr float near_z = 0.1f;
 
-			if (o0.position.w <= near_z || o1.position.w <= near_z || o2.position.w <= near_z) {
+			if (out_a.position.w <= near_z || out_b.position.w <= near_z
+				|| out_c.position.w <= near_z) {
 				continue;
 			}
 
+			float depth_a = out_a.position.z / out_a.position.w;
+			float depth_b = out_b.position.z / out_b.position.w;
+			float depth_c = out_c.position.z / out_c.position.w;
+
 			rasterize::fill_triangle(
-				sh,
-				fb,
-				zb,
-				to_screen(o0.position, Vec2i{ WIDTH, HEIGHT }),
-				to_screen(o1.position, Vec2i{ WIDTH, HEIGHT }),
-				to_screen(o2.position, Vec2i{ WIDTH, HEIGHT }),
-				o0.position.z / o0.position.w,
-				o1.position.z / o1.position.w,
-				o2.position.z / o2.position.w,
-				o0,
-				o1,
-				o2
+				to_screen(out_a.position, Vec2i{ WIDTH, HEIGHT }),
+				to_screen(out_b.position, Vec2i{ WIDTH, HEIGHT }),
+				to_screen(out_c.position, Vec2i{ WIDTH, HEIGHT }),
+				[&](int x, int y, float weight_a, float weight_b, float weight_c) {
+					float depth = depth_a * weight_a + depth_b * weight_b + depth_c * weight_c;
+
+					float& zb_cell = zb.get(x, y);
+					if (depth >= zb_cell) {
+						return;
+					}
+					zb_cell = depth;
+
+					cb.get(x, y) = sh.fragment(out_a, out_b, out_c, weight_a, weight_b, weight_c);
+				}
 			);
 		}
 	}
 	void clear();
-	void display(SDL_Window* window);
 };

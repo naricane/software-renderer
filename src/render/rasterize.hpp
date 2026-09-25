@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/color.hpp"
+#include "core/constants.hpp"
 #include "core/data_types.hpp"
 #include "core/math.hpp"
 
@@ -19,22 +20,9 @@ edge_function(Vec2i a, Vec2i b, Vec2i c)
 }
 
 /* cool tutorial: https://jtsorlinis.github.io/rendering-tutorial/ */
-template<typename Shader>
+template<typename PerPixelFn>
 void
-fill_triangle(
-	const Shader& sh,
-	ColorBuffer& fb,
-	ZBuffer& zb,
-	Vec2i a,
-	Vec2i b,
-	Vec2i c,
-	float depth_a,
-	float depth_b,
-	float depth_c,
-	const typename Shader::Output& out_a,
-	const typename Shader::Output& out_b,
-	const typename Shader::Output& out_c
-)
+fill_triangle(Vec2i a, Vec2i b, Vec2i c, PerPixelFn&& fn)
 {
 	float ABC = edge_function(a, b, c);
 
@@ -62,19 +50,7 @@ fill_triangle(
 				float weight_b = CAP * inv_area;
 				float weight_c = ABP * inv_area;
 
-				float depth = depth_a * weight_a + depth_b * weight_b + depth_c * weight_c;
-
-				float& zb_cell = zb.get_span()[x + y * WIDTH];
-				if (depth >= zb_cell) {
-					continue;
-				}
-				zb_cell = depth;
-
-				put_pixel(
-					fb,
-					Vec2i{ p.x, p.y },
-					sh.fragment(out_a, out_b, out_c, weight_a, weight_b, weight_c)
-				);
+				fn(x, y, weight_a, weight_b, weight_c);
 			}
 		}
 	}
