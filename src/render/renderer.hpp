@@ -22,18 +22,16 @@ to_screen(const Vec4& clip, Vec2i screen_size)
 class Renderer
 {
 private:
-	Framebuffer fb;
+	Framebuffer* target;
 
 public:
-	Renderer()
-		: fb(WIDTH, HEIGHT)
-	{
-	}
+	Renderer() {}
 	Renderer(const Renderer&) = delete;
 	Renderer& operator=(const Renderer&) = delete;
 	Renderer(Renderer&&) = default;
 	Renderer& operator=(Renderer&&) = default;
 
+	void set_target(Framebuffer* target);
 	template<typename Shader>
 	void draw_elements(
 		const Shader& sh,
@@ -41,6 +39,10 @@ public:
 		std::span<const unsigned int> indices
 	)
 	{
+		if (!target) {
+			return;
+		}
+
 		using Out = typename Shader::Output;
 
 		for (std::size_t i = 0; i + 2 < indices.size(); i += 3) {
@@ -66,13 +68,13 @@ public:
 				[&](int x, int y, float weight_a, float weight_b, float weight_c) {
 					float depth = depth_a * weight_a + depth_b * weight_b + depth_c * weight_c;
 
-					float& zb_cell = fb.z_buffer.get(x, y);
+					float& zb_cell = target->z_buffer.get(x, y);
 					if (depth >= zb_cell) {
 						return;
 					}
 					zb_cell = depth;
 
-					fb.color_buffer.get(x, y)
+					target->color_buffer.get(x, y)
 						= sh.fragment(out_a, out_b, out_c, weight_a, weight_b, weight_c);
 				}
 			);
