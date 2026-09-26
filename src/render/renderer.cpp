@@ -6,6 +6,6 @@
 void
 Renderer::clear()
 {
-	cb.clear();
-	zb.clear(1.f);
+	fb.color_buffer.clear();
+	fb.z_buffer.clear(1.f);
 }

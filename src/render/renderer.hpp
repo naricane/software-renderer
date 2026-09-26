@@ -2,6 +2,7 @@
 
 #include "core/constants.hpp"
 #include "core/data_types.hpp"
+#include "core/framebuffer.hpp"
 #include "core/vertex.hpp"
 #include "render/rasterize.hpp"
 #include <SDL3/SDL_render.h>
@@ -20,14 +21,12 @@ to_screen(const Vec4& clip, Vec2i screen_size)
 
 class Renderer
 {
-public:
-	ColorBuffer cb;
-	ZBuffer zb;
+private:
+	Framebuffer fb;
 
 public:
 	Renderer()
-		: cb(WIDTH, HEIGHT)
-		, zb(WIDTH, HEIGHT)
+		: fb(WIDTH, HEIGHT)
 	{
 	}
 	Renderer(const Renderer&) = delete;
@@ -67,13 +66,14 @@ public:
 				[&](int x, int y, float weight_a, float weight_b, float weight_c) {
 					float depth = depth_a * weight_a + depth_b * weight_b + depth_c * weight_c;
 
-					float& zb_cell = zb.get(x, y);
+					float& zb_cell = fb.z_buffer.get(x, y);
 					if (depth >= zb_cell) {
 						return;
 					}
 					zb_cell = depth;
 
-					cb.get(x, y) = sh.fragment(out_a, out_b, out_c, weight_a, weight_b, weight_c);
+					fb.color_buffer.get(x, y)
+						= sh.fragment(out_a, out_b, out_c, weight_a, weight_b, weight_c);
 				}
 			);
 		}
