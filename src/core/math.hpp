@@ -162,6 +162,8 @@ Mat4
 look_at(const Vec3& eye, const Vec3& target, const Vec3& up);
 Mat4
 perspective(float fov_y, float aspect, float near_z, float far_z);
+Mat4
+ortho(float left, float right, float bottom, float top, float near_z, float far_z);
 
 }
 
@@ -175,5 +177,16 @@ float
 dot(const Vec3& a, const Vec3& b);
 Vec3
 cross(const Vec3& a, const Vec3& b);
+
+}
+
+namespace math {
+
+Vec4
+lerp(const Vec4& a, const Vec4& b, float t);
+Vec2
+lerp(const Vec2& a, const Vec2& b, float t);
+float
+lerp(float a, float b, float t);
 
 }

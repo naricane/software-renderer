@@ -120,6 +120,20 @@ perspective(float fov_y, float aspect, float near_z, float far_z)
 	return r;
 }
 
+Mat4
+ortho(float left, float right, float bottom, float top, float near_z, float far_z)
+{
+	Mat4 r;
+	r.m[0][0] = 2.f / (right - left);
+	r.m[1][1] = 2.f / (top - bottom);
+	r.m[2][2] = -2.f / (far_z - near_z);
+	r.m[0][3] = -(right + left) / (right - left);
+	r.m[1][3] = -(top + bottom) / (top - bottom);
+	r.m[2][3] = -(far_z + near_z) / (far_z - near_z);
+	r.m[3][3] = 1.f;
+	return r;
+}
+
 }
 
 namespace vector {
@@ -151,6 +165,30 @@ cross(const Vec3& a, const Vec3& b)
 		a.z * b.x - a.x * b.z,
 		a.x * b.y - a.y * b.x,
 	};
+}
+
+}
+
+namespace math {
+
+Vec4
+lerp(const Vec4& a, const Vec4& b, float t)
+{
+	return {
+		a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t, a.w + (b.w - a.w) * t
+	};
+}
+
+Vec2
+lerp(const Vec2& a, const Vec2& b, float t)
+{
+	return { a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t };
+}
+
+float
+lerp(float a, float b, float t)
+{
+	return a + (b - a) * t;
 }
 
 }
